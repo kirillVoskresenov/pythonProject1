@@ -19,13 +19,15 @@ news
        <table>
            <tr>
                <td> <h3><strong>Название статьи&nbsp;&nbsp;&nbsp;&nbsp;</strong></h3> </td>
-               <td> <h3><strong>Дата публикации</strong></h3> </td>
-               <td> <h3><strong>Описание</strong></h3> </td>
+               <td> <h3><strong>&nbsp;Категория&nbsp;&nbsp;&nbsp;</strong></h3> </td>
+               <td> <h3><strong>&nbsp;Дата публикации&nbsp;&nbsp;&nbsp;</strong></h3> </td>
+               <td> <h3><strong>&nbsp;Описание&nbsp;&nbsp;&nbsp;</strong></h3> </td>
            </tr>
 
            {% for post in news %}
            <tr>
                <td>{{ post.title }}</td>
+               <td>{{ post.post_type }}</td>
                <td>{{ post.article_date|date:'M d Y' }}</td>
                <td>{{ post.text|truncatewords:20|censor }}</td>
            </tr>

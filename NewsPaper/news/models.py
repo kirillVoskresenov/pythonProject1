@@ -36,10 +36,14 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    subscribers = models.ManyToManyField(User, related_name='category')
 
     def __str__(self):
         return self.name.title()
 
+class PostSubsriber(models.Model):
+    Category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    Author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
 class Post(models.Model):
     news = 'NE'

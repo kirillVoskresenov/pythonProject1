@@ -1,12 +1,13 @@
 from django.views.generic import ListView, DetailView, CreateView,\
     UpdateView, DeleteView
-from .models import Post
+from .models import Post, Category, PostCategory
 from .filters import PostFilter
 from django.urls import reverse_lazy
 from .forms import PostsForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import CreateView
-
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 
 class PostsList(ListView):
@@ -104,7 +105,7 @@ class ArticlesUpdate(PermissionRequiredMixin,LoginRequiredMixin,UpdateView):
 class NewsDelete(DeleteView):
     model = Post
     template_name = 'news_delete.html'
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('news')
 
     def get_queryset(self):
         return super().get_queryset().filter(post_type='NE')
@@ -112,7 +113,8 @@ class NewsDelete(DeleteView):
 class ArticlesDelete(DeleteView):
     model = Post
     template_name = 'articles_delete.html'
-    success_url = reverse_lazy('post_list')
+    success_url = reverse_lazy('news')
 
     def get_queryset(self):
         return super().get_queryset().filter(post_type='AR')
+

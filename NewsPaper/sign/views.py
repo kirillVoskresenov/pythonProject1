@@ -4,6 +4,7 @@ from .models import BaseRegisterForm
 from django.shortcuts import redirect
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
+from django.dispatch import receiver
 
 @login_required
 def upgrade_me(request):

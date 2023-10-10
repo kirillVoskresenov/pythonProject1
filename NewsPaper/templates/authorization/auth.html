@@ -1,9 +1,15 @@
 {% extends "main.html" %}
 
 {% block content %}
-<h1>Страница авторизованного пользователя {{request.user.username}}</h1>
-<div> Здесь может содержаться персональная информация для каждого пользователя </div>
+<h1 style="text-align: center;">Страница авторизованного пользователя {{request.user.username}}</h1>
 
+<div> <h3><br />Имя: {{request.user.first_name}}</h3></div>
+<div> <h3><br />Фамилия: {{request.user.last_name}}</h3></div>
+<div> <h3><br />Email: {{request.user.email}}</h3> </div>
+<div> <h3><br />Дата регистрации: {{request.user.date_joined}}</h3></div>
+<br />
+<br />
+<br />
 <button> <a href="sign/logout/">Выйти</a> </button>
 
 

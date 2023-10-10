@@ -23,5 +23,6 @@ urlpatterns = [
     path('sign/', include('sign.urls')),
     path('pages/', include('django.contrib.flatpages.urls')),
     path('news/', include('news.urls')),
-    path('search/', include('news.urls'))
+    path('search/', include('news.urls')),
+    path('', include('news.urls')),
 ]

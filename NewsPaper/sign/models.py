@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django import forms
 from allauth.account.forms import SignupForm
 from django.contrib.auth.models import Group
-
+from django.dispatch import receiver
 
 class BasicSignupForm(SignupForm):
     def save(self, request):
@@ -11,6 +11,7 @@ class BasicSignupForm(SignupForm):
         basic_group = Group.objects.get(name='common')
         basic_group.user_set.add(user)
         return user
+
 
 class BaseRegisterForm(UserCreationForm):
     email = forms.EmailField(label = "Email")
