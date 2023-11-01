@@ -8,12 +8,12 @@ from news.models import PostCategory, Category
 from django.conf import settings
 
 
-def send_notifications(text, pk, title, subscribers):
+def send_notifications(preview, pk, title, subscribers):
     html_content = render_to_string(
         'new_post.html',
         {
             'title': title,
-            'text': text,
+            'text': preview,
             'link': f'{settings.SITE_URL}/news/{pk}'
         }
     )
