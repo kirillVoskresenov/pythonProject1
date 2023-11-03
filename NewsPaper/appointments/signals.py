@@ -30,11 +30,11 @@ def send_notifications(preview, pk, title, subscribers):
 
 
 
-@receiver(m2m_changed, sender=Category)
+@receiver(m2m_changed, sender=PostCategory)
 def weekly_notify(sender, instance, **kwargs):
     if kwargs['action'] == 'post_add':
 
-        categories = instance.post_category.all()
+        categories = instance.category.all()
         subscribers_emails = []
         for category in categories:
             subscribers_emails += category.subscribers.all()
