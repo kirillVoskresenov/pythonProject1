@@ -6,9 +6,9 @@ from django.urls import reverse_lazy
 from .forms import PostsForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import CreateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+from .tasks import new_post_task
 
 class PostsList(ListView):
     model = Post
@@ -65,9 +65,14 @@ class NewsCreate(PermissionRequiredMixin,LoginRequiredMixin,CreateView):
     template_name = 'news_edit.html'
     permission_required = ('news.create_post')
 
-    def form_valid(self, form):
-        post = form.save(commit=False)
-        post.post_type = 'NE'
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.post_type = 'NE'
+            post.save()
+            new_post_task.delay(post.pk)
         return super().form_valid(form)
 
 class ArticlesCreate(PermissionRequiredMixin,LoginRequiredMixin,CreateView):
@@ -79,9 +84,15 @@ class ArticlesCreate(PermissionRequiredMixin,LoginRequiredMixin,CreateView):
     template_name = 'articles_edit.html'
     permission_required = ('news.create_post')
 
-    def form_valid(self, form):
-        post = form.save(commit=False)
-        post.post_type = 'AR'
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.post_type = 'NE'
+            post.save()
+            new_post_task.delay(post.pk)
+            
         return super().form_valid(form)
 
 class NewsUpdate(PermissionRequiredMixin,LoginRequiredMixin,UpdateView):
