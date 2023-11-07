@@ -1,14 +1,11 @@
-from django.views.generic import ListView, DetailView, CreateView,\
-    UpdateView, DeleteView
-from .models import Post, Category, PostCategory
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
+from .models import Post
 from .filters import PostFilter
 from django.urls import reverse_lazy
 from .forms import PostsForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic.edit import CreateView
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .tasks import new_post_task
+from news.tasks import new_post_task
 
 class PostsList(ListView):
     model = Post

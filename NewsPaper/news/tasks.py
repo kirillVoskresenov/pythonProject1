@@ -1,20 +1,18 @@
-
-import datetime
+from datetime import timedelta
+from django.utils import timezone
 
 from celery import shared_task
-from .models import Post, Category
 
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
 
-from django.shortcuts import render
-from .models import *
+from news.models import *
 from NewsPaper import settings
 
 @shared_task
 def daily_news_task():
-    today = datetime.datetime.now()
-    last_week = today - datetime.timedelta(days=7)
+    today = timezone.now()
+    last_week = today - timedelta(days=7)
     posts = Post.objects.filter(article_date__gte=last_week)
     categories = set(posts.values_list('category__name', flat=True))
     subscibers = Category.objects.filter(name__in=categories).values_list('subscribers__email', flat=True)
